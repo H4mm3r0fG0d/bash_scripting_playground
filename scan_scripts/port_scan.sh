@@ -14,3 +14,9 @@ for IP in $(seq 1 254); do
 	ping -c 1 $Subnet.$IP|grep "64 bytes"|cut -d " " -f 4|tr -d ":" > discoveredIPs.txt &
 done
 fi
+
+cat discoveredIPs.txt|sort > discoveredIPs.txt
+
+nmap -T4 -sV -A -iL discoveredIPs.txt -oN port_scan_ips.txt --append-output
+
+exit
